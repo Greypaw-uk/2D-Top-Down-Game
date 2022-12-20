@@ -8,7 +8,7 @@ public class LootContainer : MonoBehaviour
     private Collider2D playerCollider;
     public GameObject emptyShelf;
 
-    public GameObject gameController;
+    public GameObject FloatingTextController;
 
     public bool isPlayerTouching;
 
@@ -21,6 +21,8 @@ public class LootContainer : MonoBehaviour
         {
             playerCollider = player.GetComponent<Collider2D>();
         }
+
+        FloatingTextController = GameObject.Find("UI_FloatingTextController");
     }
 
     void FixedUpdate()
@@ -28,7 +30,7 @@ public class LootContainer : MonoBehaviour
         if (containerCollider.IsTouching(playerCollider))
         {
             //Debug.Log("Touching loot container");
-            gameController.GetComponent<GameController>().isTouchingLootContainer = true;
+            FloatingTextController.GetComponent<UI_FloatingTextController>().isTouchingLootContainer = true;
 
             isPlayerTouching = true;
 
@@ -42,7 +44,7 @@ public class LootContainer : MonoBehaviour
         }
         else
         {
-            gameController.GetComponent<GameController>().isTouchingLootContainer = false;
+            FloatingTextController.GetComponent<UI_FloatingTextController>().isTouchingLootContainer = false;
 
             isPlayerTouching = false;   
         }
