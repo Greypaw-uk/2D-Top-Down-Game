@@ -1,12 +1,106 @@
 using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float playerHealth = 100;
-    
-    [SerializeField] private int Ammo_nineMm = 11;
-    [SerializeField] private int Ammo_TwelveGauge = 11;
-    [SerializeField] private int Ammo_Nato = 0;
-    [SerializeField] private int Ammo_Walsaw = 0;
-    [SerializeField] private int Ammo_Sniper = 0;
+
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public Rigidbody2D rb;
+
+#region Movement
+    public float moveSpeed = 5f;
+    private Vector2 movement;
+    private bool canMove = true;
+    public float rotationOffset = 90f;
+#endregion
+
+    public string itemName;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        if (canMove)
+        {
+            movement.x = Input.GetAxis("Horizontal");
+            movement.y = Input.GetAxis("Vertical");
+        }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Shoot();
+        }
+
+        RotatePlayerToMouse();
+    }
+
+    void FixedUpdate()
+    {
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+    }
+
+
+#region Movement
+
+    void RotatePlayerToMouse()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = (mousePosition - transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        rb.rotation = angle - rotationOffset;
+
+        firePoint.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Terrain"))
+        {
+            canMove = false;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Terrain"))
+        {
+            canMove = true;
+        }
+    }
+
+#endregion
+
+#region Weapons
+
+    void Shoot()
+    {
+        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+    }
+
+#endregion
+
+#region Item Interaction
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PickUp(other);
+        }
+    }
+
+    void PickUp(Collider2D player)
+    {
+        // Add logic for picking up the item
+        Debug.Log("Picked up " + itemName);
+        Destroy(gameObject);
+    }
+
+#endregion
 }

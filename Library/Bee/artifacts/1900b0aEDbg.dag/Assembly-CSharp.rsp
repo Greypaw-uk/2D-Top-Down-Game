@@ -342,7 +342,6 @@
 "Assets/CodeMonkey/Assets.cs"
 "Assets/CodeMonkey/CMDebug.cs"
 "Assets/CodeMonkey/MonoBehaviours/CameraFollow.cs"
-"Assets/CodeMonkey/MonoBehaviours/CameraFollowSetup.cs"
 "Assets/CodeMonkey/MonoBehaviours/ComponentActions.cs"
 "Assets/CodeMonkey/MonoBehaviours/PositionRendererSorter.cs"
 "Assets/CodeMonkey/Utils/Button_Sprite.cs"
@@ -358,16 +357,10 @@
 "Assets/CodeMonkey/Utils/World_Bar.cs"
 "Assets/CodeMonkey/Utils/World_Mesh.cs"
 "Assets/CodeMonkey/Utils/World_Sprite.cs"
-"Assets/Scripts/CameraFollowsPlayer.cs"
-"Assets/Scripts/FieldOfView.cs"
-"Assets/Scripts/GameController.cs"
+"Assets/Scripts/Bullet.cs"
+"Assets/Scripts/CameraFollow.cs"
 "Assets/Scripts/LootContainer.cs"
 "Assets/Scripts/PlayerController.cs"
-"Assets/Scripts/Player_Bullet.cs"
-"Assets/Scripts/Player_Movement.cs"
-"Assets/Scripts/Player_Shoot.cs"
-"Assets/Scripts/Terrain_Destruction.cs"
-"Assets/Scripts/UI_FloatingTextController.cs"
 -langversion:8.0
 
 /deterministic
