@@ -4,16 +4,18 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
-
-    public GameObject bulletPrefab;
-    public Transform firePoint;
     public Rigidbody2D rb;
 
 #region Movement
-    public float moveSpeed = 5f;
+    public float moveSpeed = 3f;
     private Vector2 movement;
     private bool canMove = true;
     public float rotationOffset = 90f;
+#endregion
+
+#region Weapons
+    public GameObject bulletPrefab;
+    public Transform firePoint;
 #endregion
 
     public string itemName;
@@ -27,6 +29,11 @@ public class PlayerController : MonoBehaviour
     {
         if (canMove)
         {
+             if (Input.GetKey(KeyCode.LeftShift))
+                moveSpeed = 5f;
+            else
+                moveSpeed = 3f;
+
             movement.x = Input.GetAxis("Horizontal");
             movement.y = Input.GetAxis("Vertical");
         }
@@ -60,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Terrain"))
+        if (collision.gameObject.CompareTag("Wall"))
         {
             canMove = false;
         }
@@ -68,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Terrain"))
+        if (collision.gameObject.CompareTag("Wall"))
         {
             canMove = true;
         }
